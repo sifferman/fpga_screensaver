@@ -1,0 +1,11 @@
+{
+    // verilog
+    "verilog.linting.linter": "iverilog",
+    "verilog.linting.iverilog.arguments": "-g2012 -Wall -Wno-timescale -DSIM -y rtl -Y .sv",
+    "verilog.linting.iverilog.runAtFileLocation": false,
+
+    // fusesoc
+    "files.associations": {
+        "*.core": "yaml"
+    }
+}
