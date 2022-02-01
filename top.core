@@ -1,0 +1,46 @@
+CAPI=2:
+name: ucsbieee:fpga_movie:top:1.0.0
+description: movie
+
+
+filesets:
+  # default
+  rtl:
+    files:
+      - rtl/top.v:          {file_type: verilogSource}
+      - rtl/image.v:        {file_type: verilogSource}
+      - rtl/video_timer.sv: {file_type: systemVerilogSource}
+
+  tb:
+    files:
+      - tb/top.tb.v:        {file_type: verilogSource}
+      - tb/to_png.py:       {file_type: user, copyto: to_png.py}
+
+
+targets:
+  default: &default
+    filesets:
+      - rtl
+
+  tb: # fusesoc run --target tb ucsbieee:fpga_movie:top
+    <<: *default
+    description: Simulate the design
+    filesets_append:
+      - tb
+    toplevel: tb
+    default_tool: icarus
+    tools:
+      icarus:
+        iverilog_options:
+          - -g2012 # Use SystemVerilog-2012
+          - -Wall
+          - -Wno-timescale
+          - -DSIM
+    hooks:
+      post_run:
+        - to_png
+
+
+scripts:
+  to_png:
+    cmd: [python3, to_png.py, image.txt, image.png]
