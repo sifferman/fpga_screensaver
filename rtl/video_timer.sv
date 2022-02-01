@@ -121,9 +121,9 @@ module video_timer #(
         frame_NEXT          = frame;
         if (rst) begin // reset
             y_counter_NEXT      = 0;
-            vstate_back_NEXT    = 0;
+            vstate_back_NEXT    = 1;
             vstate_visible_NEXT = 0;
-            vstate_front_NEXT   = 1;
+            vstate_front_NEXT   = 0;
             vstate_sync_NEXT    = 0;
             frame_NEXT          = 0;
         end else if ((x_counter_NEXT!=0) || (!hstate_back_NEXT)) begin // if not at new line
