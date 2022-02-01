@@ -21,6 +21,9 @@ ${FST} ${IMG}: fusesoc.conf ${SRC}
 view: fusesoc.conf ${FST}
 	gtkwave ${FST} > /dev/null 2>&1 &
 
+lint: fusesoc.conf ${SRC}
+	fusesoc run --target lint ucsbieee:fpga_movie:top
+
 init: fusesoc.conf
 
 clean:

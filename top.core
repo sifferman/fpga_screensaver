@@ -40,6 +40,15 @@ targets:
       post_run:
         - to_png
 
+  lint: # fusesoc run --target lint ucsbieee:fpga_movie:top
+    <<: *default
+    description: Simulate the design
+    toplevel: top
+    default_tool: verilator
+    tools:
+      verilator:
+        mode: lint-only
+
 
 scripts:
   to_png:
