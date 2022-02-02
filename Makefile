@@ -24,6 +24,9 @@ view: fusesoc.conf ${FST}
 lint: fusesoc.conf ${SRC}
 	fusesoc run --target lint ucsbieee:fpga_movie:top
 
+synth: fusesoc.conf ${SRC}
+	fusesoc run --target synth ucsbieee:fpga_movie:top
+
 init: fusesoc.conf
 
 clean:

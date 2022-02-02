@@ -11,6 +11,7 @@ This project acts as an introduction to FPGAs, RTL, and VGA.
 make run    # generaes the dump file
 make view   # opens the dump file in gtkwave
 make lint   # ensure code meets Verilator standards
+make synth  # run synthesis
 ```
 
 The VGA output is formatted in a png here: `build/ucsbieee_fpga_movie_top_1.0.0/tb-icarus/image.png`.
@@ -21,3 +22,4 @@ The VGA output is formatted in a png here: `build/ucsbieee_fpga_movie_top_1.0.0/
 * [Icarus Verilog](http://iverilog.icarus.com/)
 * [GTKWave](http://gtkwave.sourceforge.net/)
 * [Verilator](https://www.veripool.org/verilator/)
+* [Yosys](https://yosyshq.net/yosys/)

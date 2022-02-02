@@ -16,6 +16,10 @@ filesets:
       - tb/top.tb.v:        {file_type: verilogSource}
       - tb/to_png.py:       {file_type: user, copyto: to_png.py}
 
+  synth:
+    files:
+      - synth/post.tcl:     {file_type: user, copyto: post.tcl}
+
 
 targets:
   default: &default
@@ -49,7 +53,31 @@ targets:
       verilator:
         mode: lint-only
 
+  synth: # fusesoc run --target synth ucsbieee:fpga_movie:top
+    <<: *default
+    description: Synthesize
+    filesets_append:
+      - synth
+    toplevel: top
+    default_tool: yosys
+    tools:
+      yosys:
+        arch: ice40
+        output_format: json
+    hooks:
+      pre_build:
+        - convert_to_prep
+      post_build:
+        - record_stats
+
 
 scripts:
   to_png:
     cmd: [python3, to_png.py, image.txt, image.png]
+    filesets: [tb]
+  convert_to_prep:
+    cmd: [sed, -i, 's/synth_ice40/prep/g', edalize_yosys_procs.tcl]
+    filesets: [synth]
+  record_stats:
+    cmd: [yosys, -c, post.tcl]
+    filesets: [synth]
