@@ -1,4 +1,5 @@
 import sys
+from os import path
 from PIL import Image
 import numpy as np
 
@@ -34,3 +35,5 @@ if __name__ == '__main__':
     # print(np_data)
     im = Image.fromarray(np_data, 'RGBA')
     im.save(fileout_name)
+
+    print("Generated image at " + path.abspath(fileout_name) + ".")
