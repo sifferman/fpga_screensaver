@@ -26,8 +26,8 @@ targets:
   default: &default
     filesets:
       - rtl
-    # parameters: # not working... :(
-    #   - IMAGE_SELECT=0
+    parameters:
+      - IMAGE_SELECT=1
 
   tb: # fusesoc run --target tb ucsbieee:fpga_movie:top
     <<: *default
@@ -84,3 +84,9 @@ scripts:
   record_stats:
     cmd: [yosys, -c, post.tcl]
     filesets: [synth]
+
+parameters:
+  IMAGE_SELECT:
+    datatype: int
+    description: Select which image to use
+    paramtype: vlogparam

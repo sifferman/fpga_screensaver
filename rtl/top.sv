@@ -1,6 +1,6 @@
 
 module top #(
-    parameter IMAGE_SELECT = 1
+    parameter IMAGE_SELECT = 0
 ) (
     input               clk, rst,
     output wire         hsync, vsync,

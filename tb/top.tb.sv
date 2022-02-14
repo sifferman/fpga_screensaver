@@ -2,7 +2,7 @@
 `timescale 1s/1ms
 
 module tb #(
-    parameter IMAGE_SELECT = 1
+    parameter IMAGE_SELECT = 0
 ) ();
 
 reg clk = 1;
