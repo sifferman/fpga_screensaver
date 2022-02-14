@@ -7,13 +7,14 @@ filesets:
   # default
   rtl:
     files:
-      - rtl/top.v:          {file_type: verilogSource}
-      - rtl/image.v:        {file_type: verilogSource}
-      - rtl/video_timer.sv: {file_type: systemVerilogSource}
+      - rtl/top.sv
+      - rtl/image.sv
+      - rtl/video_timer.sv
+    file_type: systemVerilogSource
 
   tb:
     files:
-      - tb/top.tb.v:        {file_type: verilogSource}
+      - tb/top.tb.sv:       {file_type: systemVerilogSource}
       - tb/to_png.py:       {file_type: user, copyto: to_png.py}
 
   synth:
@@ -25,6 +26,8 @@ targets:
   default: &default
     filesets:
       - rtl
+    # parameters: # not working... :(
+    #   - IMAGE_SELECT=0
 
   tb: # fusesoc run --target tb ucsbieee:fpga_movie:top
     <<: *default

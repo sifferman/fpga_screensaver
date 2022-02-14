@@ -1,7 +1,9 @@
 
 `timescale 1s/1ms
 
-module tb ();
+module tb #(
+    parameter IMAGE_SELECT = 1
+) ();
 
 reg clk = 1;
 always #(0.5) clk <= ~clk;
@@ -13,7 +15,7 @@ wire vsync;
 wire visible;
 wire [3:0] r, g, b;
 
-top t(
+top #(IMAGE_SELECT) t (
     .clk(clk),
     .rst(rst),
     .hsync(hsync),
@@ -28,8 +30,23 @@ $dumpvars;
 $display( "Begin simulation.");
 //\\ =========================== \\//
 
+// ==== Checkerboard ====
+if (IMAGE_SELECT == 0) begin
+//
+
 for (integer i = 0; i < 8; i=i+1)
     @(negedge vsync);
+
+//
+end
+// ==== Fractal ====
+if (IMAGE_SELECT == 1) begin
+//
+
+@(negedge vsync);
+
+//
+end
 
 //\\ =========================== \\//
 $display( "End simulation.");

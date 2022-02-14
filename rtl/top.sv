@@ -1,5 +1,7 @@
 
-module top (
+module top #(
+    parameter IMAGE_SELECT = 1
+) (
     input               clk, rst,
     output wire         hsync, vsync,
     output wire   [3:0] r, g, b
@@ -33,7 +35,7 @@ video_timer #(
     frame
 );
 
-image im (
+image #(IMAGE_SELECT) im (
     clk,
     position_x, position_x_NEXT,
     position_y, position_y_NEXT,
