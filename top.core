@@ -1,5 +1,5 @@
 CAPI=2:
-name: ucsbieee:fpga_movie:top:1.0.0
+name: ucsbieee::fpga_movie:1.0.0
 description: movie
 
 
@@ -14,12 +14,12 @@ filesets:
 
   tb:
     files:
-      - tb/top.tb.sv:       {file_type: systemVerilogSource}
-      - tb/to_png.py:       {file_type: user, copyto: to_png.py}
+      - tb/top.tb.sv:   {file_type: systemVerilogSource}
+      - tb/to_png.py:   {file_type: user, copyto: to_png.py}
 
-  synth:
+  usage:
     files:
-      - synth/post.tcl:     {file_type: user, copyto: post.tcl}
+      - usage/post.tcl: {file_type: user, copyto: post.tcl}
 
 
 targets:
@@ -56,11 +56,11 @@ targets:
       verilator:
         mode: lint-only
 
-  synth: # fusesoc run --target synth ucsbieee:fpga_movie:top
+  usage: # fusesoc run --target usage ucsbieee:fpga_movie:top
     <<: *default
     description: Synthesize
     filesets_append:
-      - synth
+      - usage
     toplevel: top
     default_tool: yosys
     tools:
@@ -71,7 +71,7 @@ targets:
       pre_build:
         - convert_to_prep
       post_build:
-        - record_stats
+        - record_usage
 
 
 scripts:
@@ -80,10 +80,10 @@ scripts:
     filesets: [tb]
   convert_to_prep:
     cmd: [sed, -i, 's/synth_ice40/prep/g', edalize_yosys_procs.tcl]
-    filesets: [synth]
-  record_stats:
+  record_usage:
     cmd: [yosys, -c, post.tcl]
-    filesets: [synth]
+    filesets: [usage]
+
 
 parameters:
   IMAGE_SELECT:

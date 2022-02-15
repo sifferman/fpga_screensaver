@@ -2,33 +2,34 @@
 .PHONY: test
 
 RTL = $(shell find rtl -type f)
-TB = $(shell find tb -type f)
-SYNTH = $(shell find synth -type f)
 CORE = top.core
+TB = $(shell find tb -type f)
+USAGE = $(shell find usage -type f)
 SRC = ${RTL} ${CORE}
 
-FST = build/ucsbieee_fpga_movie_top_1.0.0/tb-icarus/dump.fst
-IMG = build/ucsbieee_fpga_movie_top_1.0.0/tb-icarus/image.png
+FST = build/ucsbieee__fpga_movie_1.0.0/tb-icarus/dump.fst
+IMG = build/ucsbieee__fpga_movie_1.0.0/tb-icarus/image.png
+USAGE_REPORT = build/ucsbieee__fpga_movie_1.0.0/usage-yosys/usage.txt
 
 run: ${FST}
 img: ${IMG}
-
-fusesoc.conf:
-	fusesoc library add tests . --sync-type=local
-
-${FST} ${IMG}: fusesoc.conf ${SRC} ${TB}
-	fusesoc run --target tb ucsbieee:fpga_movie:top
+init: fusesoc.conf
+usage: ${USAGE_REPORT}
 
 view: fusesoc.conf ${FST}
 	gtkwave ${FST} > /dev/null 2>&1 &
 
 lint: fusesoc.conf ${SRC}
-	fusesoc run --target lint ucsbieee:fpga_movie:top
+	fusesoc run --target lint ucsbieee::fpga_movie
 
-synth: fusesoc.conf ${SRC} ${SYNTH}
-	fusesoc run --target synth ucsbieee:fpga_movie:top
-
-init: fusesoc.conf
+fusesoc.conf:
+	fusesoc library add tests . --sync-type=local
 
 clean:
 	rm -rf build fusesoc.conf
+
+${FST} ${IMG}: fusesoc.conf ${SRC} ${TB}
+	fusesoc run --target tb ucsbieee::fpga_movie
+
+${USAGE_REPORT}: fusesoc.conf ${SRC} ${USAGE}
+	fusesoc run --target usage ucsbieee::fpga_movie

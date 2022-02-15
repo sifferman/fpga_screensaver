@@ -3,18 +3,20 @@
 
 <https://github.com/E4tHam/fpga_movie>
 
-This project acts as an introduction to FPGAs, RTL, and VGA.
+This project implements the VGA protocol and allows custom images to be displayed to the screen.
+
+This is a good introductory project to RTL, video interfaces, and FPGAs.
 
 ## To Run
 
 ```bash
-make run    # generaes the dump file
+make run    # generaes the dump and VGA image file
 make view   # opens the dump file in gtkwave
 make lint   # ensure code meets Verilator standards
-make synth  # run synthesis
+make usage  # report cell utilization
 ```
 
-The VGA output is formatted in a png here: `build/ucsbieee_fpga_movie_top_1.0.0/tb-icarus/image.png`.
+The VGA output is formatted in a png here: `build/ucsbieee__fpga_movie_1.0.0/tb-icarus/image.png`.
 
 ## Requirements
 
