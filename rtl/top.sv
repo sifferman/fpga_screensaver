@@ -2,7 +2,7 @@
 module top #(
     parameter IMAGE_SELECT = 0
 ) (
-    input               clk, rst,
+    input               clk_25_175, rst,
     output wire         hsync, vsync,
     output wire   [3:0] r, g, b
 );
@@ -27,7 +27,7 @@ video_timer #(
     .V_SYNC(2),
     .V_BACK(33)
 ) vt (
-    clk, rst,
+    clk_25_175, rst,
     hsync, vsync,
     visible,
     position_x, position_x_NEXT,
@@ -36,7 +36,7 @@ video_timer #(
 );
 
 image #(IMAGE_SELECT) im (
-    clk,
+    clk_25_175,
     position_x, position_x_NEXT,
     position_y, position_y_NEXT,
     frame,
@@ -46,8 +46,8 @@ image #(IMAGE_SELECT) im (
 `ifdef SIM
 
 integer f = $fopen("image.txt");
-always @ (negedge clk)      $fwrite(f, "%h%h0%h0%h0 ", (visible?8'hff:8'h00), b, g, r);
-always @ (posedge hsync)    $fwrite(f, "\n");
+always @ (negedge clk_25_175)   $fwrite(f, "%h%h0%h0%h0 ", (visible?8'hff:8'h00), b, g, r);
+always @ (posedge hsync)        $fwrite(f, "\n");
 
 `endif
 

@@ -14,12 +14,18 @@ filesets:
 
   tb:
     files:
-      - tb/top.tb.sv:   {file_type: systemVerilogSource}
-      - tb/to_png.py:   {file_type: user, copyto: to_png.py}
+      - tb/top.tb.sv:           {file_type: systemVerilogSource}
+      - tb/to_png.py:           {file_type: user, copyto: to_png.py}
 
   usage:
     files:
-      - usage/post.tcl: {file_type: user, copyto: post.tcl}
+      - usage/post.tcl:         {file_type: user, copyto: post.tcl}
+
+  tangnano:
+    files:
+      - tangnano/tangnano.sv:   {file_type: systemVerilogSource}
+      - tangnano/pins.cst:      {file_type: CST}
+      # - tangnano/Gowin_rPLL.v:  {file_type: verilogSource}
 
 
 targets:
@@ -29,7 +35,7 @@ targets:
     parameters:
       - IMAGE_SELECT=1
 
-  tb: # fusesoc run --target tb ucsbieee:fpga_movie:top
+  tb: # fusesoc run --target tb ucsbieee::fpga_movie
     <<: *default
     description: Simulate the design
     filesets_append:
@@ -39,7 +45,7 @@ targets:
     tools:
       icarus:
         iverilog_options:
-          - -g2012 # Use SystemVerilog-2012
+          - -g2012
           - -Wall
           - -Wno-timescale
           - -DSIM
@@ -47,7 +53,7 @@ targets:
       post_run:
         - to_png
 
-  lint: # fusesoc run --target lint ucsbieee:fpga_movie:top
+  lint: # fusesoc run --target lint ucsbieee::fpga_movie
     <<: *default
     description: Simulate the design
     toplevel: top
@@ -56,7 +62,7 @@ targets:
       verilator:
         mode: lint-only
 
-  usage: # fusesoc run --target usage ucsbieee:fpga_movie:top
+  usage: # fusesoc run --target usage ucsbieee::fpga_movie
     <<: *default
     description: Synthesize
     filesets_append:
@@ -72,6 +78,17 @@ targets:
         - convert_to_prep
       post_build:
         - record_usage
+
+  tangnano: # fusesoc run --target tangnano ucsbieee::fpga_movie
+    <<: *default
+    description: Synthesize for Tang Nano
+    default_tool: apicula
+    filesets_append:
+      - tangnano
+    tools:
+      apicula:
+        device: GW1N-LV1QN48C6/I5
+    toplevel: tangnano
 
 
 scripts:

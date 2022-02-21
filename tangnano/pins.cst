@@ -1,0 +1,21 @@
+
+IO_LOC  "clk"   35;
+
+IO_LOC  "hsync" 10;
+IO_LOC  "vsync" 11;
+
+IO_LOC  "r[0]"  28;
+IO_LOC  "r[1]"  29;
+IO_LOC  "r[2]"  30;
+IO_LOC  "r[3]"  31;
+IO_LOC  "g[0]"  34;
+IO_LOC  "g[1]"  38;
+IO_LOC  "g[2]"  39;
+IO_LOC  "g[3]"  40;
+IO_LOC  "b[0]"  42;
+IO_LOC  "b[1]"  43;
+IO_LOC  "b[2]"  44;
+IO_LOC  "b[3]"  45;
+
+IO_LOC  "An"     15;
+IO_LOC  "Bn"     14;

@@ -10,10 +10,12 @@ This is a good introductory project to RTL, video interfaces, and FPGAs.
 ## To Run
 
 ```bash
-make run    # generaes the dump and VGA image file
-make view   # opens the dump file in gtkwave
-make lint   # ensure code meets Verilator standards
-make usage  # report cell utilization
+make run            # generaes the dump and VGA image file
+make view           # opens the dump file in gtkwave
+make lint           # ensure code meets Verilator standards
+make usage          # report generic cell utilization
+make tangnano       # generate tangnano bitstream
+make load_tangnano  # load bistream to tangnano
 ```
 
 The VGA output is formatted in a png here: `build/ucsbieee__fpga_movie_1.0.0/tb-icarus/image.png`.
@@ -25,3 +27,5 @@ The VGA output is formatted in a png here: `build/ucsbieee__fpga_movie_1.0.0/tb-
 * [GTKWave](http://gtkwave.sourceforge.net/)
 * [Verilator](https://www.veripool.org/verilator/)
 * [Yosys](https://yosyshq.net/yosys/)
+* [Apicula](https://github.com/YosysHQ/apicula)
+* [nextpnr-gowin](https://github.com/YosysHQ/nextpnr#nextpnr-gowin)

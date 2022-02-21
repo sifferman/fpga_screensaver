@@ -34,9 +34,10 @@ wire [8:0] shifted_x_NEXT = valid_NEXT ? 9'(position_x_NEXT - 10'd64) : {9{1'bx}
 wire [8:0] shifted_y_NEXT = valid_NEXT ? 9'(position_y_NEXT +  9'd16) : {9{1'bx}};
 
 logic color_NEXT;
+integer i;
 always_comb begin
     color_NEXT = 1'b1;
-    for (integer i = 8; i >= 1; i=i-2) begin
+    for (i = 8; i >= 1; i=i-2) begin
         color_NEXT = color_NEXT & ((shifted_x_NEXT[i]!=shifted_x_NEXT[i-1]) || (shifted_y_NEXT[i]!=shifted_y_NEXT[i-1]));
     end
 end
