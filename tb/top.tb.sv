@@ -16,7 +16,7 @@ wire visible;
 wire [3:0] r, g, b;
 
 top #(IMAGE_SELECT) t (
-    .clk(clk),
+    .clk_25_175(clk),
     .rst(rst),
     .hsync(hsync),
     .vsync(vsync),

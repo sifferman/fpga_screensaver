@@ -1,6 +1,6 @@
 
 module image #(
-    parameter SELECT = 1
+    parameter SELECT = 0
 ) (
     input               clk,
     input logic   [9:0] position_x, position_x_NEXT,
