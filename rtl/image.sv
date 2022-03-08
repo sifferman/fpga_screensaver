@@ -51,7 +51,6 @@ always_ff @ (posedge clk) begin
     g <= g_NEXT;
     b <= b_NEXT;
 end
-end
 
 //
 end
