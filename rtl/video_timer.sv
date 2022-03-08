@@ -84,13 +84,8 @@ module video_timer #(
         hstate_visible_NEXT = hstate_visible;
         hstate_front_NEXT   = hstate_front;
         hstate_sync_NEXT    = hstate_sync;
-        if (rst) begin // reset
-            x_counter_NEXT      = 0;
-            hstate_back_NEXT    = 1;
-            hstate_visible_NEXT = 0;
-            hstate_front_NEXT   = 0;
-            hstate_sync_NEXT    = 0;
-        end else if ((hstate_back) && (x_counter == (H_BACK-1))) begin // if back porch is over
+
+        if ((hstate_back) && (x_counter == (H_BACK-1))) begin // if back porch is over
             x_counter_NEXT      = 0;
             hstate_back_NEXT    = 0;
             hstate_visible_NEXT = 1;
@@ -119,14 +114,8 @@ module video_timer #(
         vstate_front_NEXT   = vstate_front;
         vstate_sync_NEXT    = vstate_sync;
         frame_NEXT          = frame;
-        if (rst) begin // reset
-            y_counter_NEXT      = 0;
-            vstate_back_NEXT    = 1;
-            vstate_visible_NEXT = 0;
-            vstate_front_NEXT   = 0;
-            vstate_sync_NEXT    = 0;
-            frame_NEXT          = 0;
-        end else if ((x_counter_NEXT!=0) || (!hstate_back_NEXT)) begin // if not at new line
+
+        if ((x_counter_NEXT!=0) || (!hstate_back_NEXT)) begin // if not at new line
             // break
         end else if ((vstate_back) && (y_counter == (V_BACK-1))) begin // if back porch is over
             y_counter_NEXT      = 0;
@@ -151,20 +140,37 @@ module video_timer #(
     end
 
     // transfer next to this
-    always @ (posedge clk) begin
-        x_counter <= x_counter_NEXT;
-        hstate_back <= hstate_back_NEXT;
-        hstate_visible <= hstate_visible_NEXT;
-        hstate_front <= hstate_front_NEXT;
-        hstate_sync <= hstate_sync_NEXT;
+    always_ff @ (posedge clk) begin
 
-        y_counter <= y_counter_NEXT;
-        vstate_back <= vstate_back_NEXT;
-        vstate_visible <= vstate_visible_NEXT;
-        vstate_front <= vstate_front_NEXT;
-        vstate_sync <= vstate_sync_NEXT;
+        if (rst) begin // reset
+            x_counter       <= 0;
+            hstate_back     <= 1;
+            hstate_visible  <= 0;
+            hstate_front    <= 0;
+            hstate_sync     <= 0;
 
-        frame <= frame_NEXT;
+            y_counter       <= 0;
+            vstate_back     <= 1;
+            vstate_visible  <= 0;
+            vstate_front    <= 0;
+            vstate_sync     <= 0;
+
+            frame           <= 0;
+        end else begin
+            x_counter <= x_counter_NEXT;
+            hstate_back <= hstate_back_NEXT;
+            hstate_visible <= hstate_visible_NEXT;
+            hstate_front <= hstate_front_NEXT;
+            hstate_sync <= hstate_sync_NEXT;
+
+            y_counter <= y_counter_NEXT;
+            vstate_back <= vstate_back_NEXT;
+            vstate_visible <= vstate_visible_NEXT;
+            vstate_front <= vstate_front_NEXT;
+            vstate_sync <= vstate_sync_NEXT;
+
+            frame <= frame_NEXT;
+        end
 
         `ifdef SIM
         if (frame != frame_NEXT)

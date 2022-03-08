@@ -34,18 +34,23 @@ wire [8:0] shifted_x_NEXT = valid_NEXT ? 9'(position_x_NEXT - 10'd64) : {9{1'bx}
 wire [8:0] shifted_y_NEXT = valid_NEXT ? 9'(position_y_NEXT +  9'd16) : {9{1'bx}};
 
 logic color_NEXT;
+logic [3:0] r_NEXT, g_NEXT, b_NEXT;
 integer i;
 always_comb begin
     color_NEXT = 1'b1;
     for (i = 8; i >= 1; i=i-2) begin
         color_NEXT = color_NEXT & ((shifted_x_NEXT[i]!=shifted_x_NEXT[i-1]) || (shifted_y_NEXT[i]!=shifted_y_NEXT[i-1]));
     end
+    r_NEXT = valid_NEXT?{4{color_NEXT}}:4'b0;
+    g_NEXT = valid_NEXT?{4{color_NEXT}}:4'b0;
+    b_NEXT = valid_NEXT?{4{color_NEXT}}:4'b0;
 end
 
-always @ (posedge clk) begin
-    r <= valid_NEXT?{4{color_NEXT}}:4'b0;
-    g <= valid_NEXT?{4{color_NEXT}}:4'b0;
-    b <= valid_NEXT?{4{color_NEXT}}:4'b0;
+always_ff @ (posedge clk) begin
+    r <= r_NEXT;
+    g <= g_NEXT;
+    b <= b_NEXT;
+end
 end
 
 //
