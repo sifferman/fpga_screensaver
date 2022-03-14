@@ -45,7 +45,8 @@ image #(IMAGE_SELECT) im (
 
 `ifdef SIM
 
-integer f = $fopen("image.txt");
+integer f;
+initial f = $fopen("image.txt");
 always @ (negedge clk_25_175)   $fwrite(f, "%h%h0%h0%h0 ", (visible?8'hff:8'h00), b, g, r);
 always @ (posedge hsync)        $fwrite(f, "\n");
 

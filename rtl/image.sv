@@ -16,7 +16,7 @@ if (SELECT == 0) begin : checkerboard
 
 wire color_next = position_x_NEXT[2] ^ position_y_NEXT[2];
 
-always @ (posedge clk) begin
+always_ff @ (posedge clk) begin
     r <= {4{color_next&frame[1]}};
     g <= {4{color_next&frame[0]}};
     b <= {4{color_next&frame[2]}};

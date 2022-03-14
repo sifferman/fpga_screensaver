@@ -17,6 +17,10 @@ filesets:
       - tb/top.tb.sv:           {file_type: systemVerilogSource}
       - tb/to_png.py:           {file_type: user, copyto: to_png.py}
 
+  lint:
+    files:
+      - lint.vlt:               {file_type: vlt}
+
   usage:
     files:
       - usage/post.tcl:         {file_type: user, copyto: post.tcl}
@@ -40,7 +44,7 @@ targets:
     description: Simulate the design
     filesets_append:
       - tb
-    toplevel: tb
+    toplevel: top_tb
     default_tool: icarus
     tools:
       icarus:
@@ -56,11 +60,14 @@ targets:
   lint: # fusesoc run --target lint ucsbieee::fpga_movie
     <<: *default
     description: Simulate the design
+    filesets_append:
+      - lint
     toplevel: top
     default_tool: verilator
     tools:
       verilator:
         mode: lint-only
+        verilator_options: ["-Wall"]
 
   usage: # fusesoc run --target usage ucsbieee::fpga_movie
     <<: *default

@@ -1,7 +1,7 @@
 
 `timescale 1s/1ms
 
-module tb #(
+module top_tb #(
     parameter IMAGE_SELECT = 0
 ) ();
 

@@ -1,0 +1,3 @@
+`verilator_config
+lint_off -rule UNUSED
+lint_off -file tb\top.tb.sv
