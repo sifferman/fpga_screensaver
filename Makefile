@@ -1,5 +1,5 @@
 
-.PHONY: test
+.PHONY: run img init usage tangnano view lint load_tangnano clean
 
 RTL = $(shell find rtl -type f)
 CORE = top.core
@@ -41,6 +41,7 @@ clean:
 	rm -rf build fusesoc.conf
 
 ${FST} ${IMG}: fusesoc.conf ${SRC} ${TB}
+	pip3 install -r tb/requirements.txt > /dev/null
 	fusesoc run --target tb ucsbieee::fpga_movie
 
 ${USAGE_REPORT}: fusesoc.conf ${SRC} ${USAGE}
