@@ -22,7 +22,7 @@ if __name__ == '__main__':
     with open(filein_name, 'r') as filein:
         for line in filein.readlines():
             list_of_strings = line.split(' ')[:-1]
-            list_of_colors = [ int(c, 16) for c in list_of_strings]
+            list_of_colors = [ int(c.replace('x','0'), 16) for c in list_of_strings]
             width = max(width, len(list_of_colors))
             data.append( list_of_colors )
     for line in data:
