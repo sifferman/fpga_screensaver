@@ -30,6 +30,10 @@ $dumpvars;
 $display( "Begin simulation.");
 //\\ =========================== \\//
 
+rst = 1;
+#4
+rst = 0;
+
 // ==== Checkerboard ====
 if (IMAGE_SELECT == 0) begin
 //
