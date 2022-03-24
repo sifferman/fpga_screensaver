@@ -5,15 +5,15 @@ module top_tb #(
     parameter IMAGE_SELECT = 0
 ) ();
 
-reg clk = 1;
+logic clk = 1;
 always #(0.5) clk <= ~clk;
 
-reg rst = 0;
+logic rst = 0;
 
-wire hsync;
-wire vsync;
-wire visible;
-wire [3:0] r, g, b;
+logic hsync;
+logic vsync;
+logic visible;
+logic [3:0] r, g, b;
 
 top #(IMAGE_SELECT) t (
     .clk_25_175(clk),

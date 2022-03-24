@@ -3,15 +3,15 @@ module top #(
     parameter IMAGE_SELECT = 0
 ) (
     input               clk_25_175, rst,
-    output wire         hsync, vsync,
-    output wire   [3:0] r, g, b
+    output logic        hsync, vsync,
+    output logic  [3:0] r, g, b
 );
 
-wire visible;
-wire [9:0] position_x, position_x_NEXT;
-wire [8:0] position_y, position_y_NEXT;
-wire [3:0] im_r, im_g, im_b;
-wire [31:0] frame;
+logic visible;
+logic [9:0] position_x, position_x_NEXT;
+logic [8:0] position_y, position_y_NEXT;
+logic [3:0] im_r, im_g, im_b;
+logic [31:0] frame;
 
 assign r = visible ? im_r : 0;
 assign g = visible ? im_g : 0;
