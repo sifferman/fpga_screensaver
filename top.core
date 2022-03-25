@@ -1,7 +1,9 @@
 CAPI=2:
+#
+# Recommended reading about FuseSoC core files: https://fusesoc.readthedocs.io/en/stable/user/build_system/core_files.html
+#
 name: ucsbieee::fpga_movie:1.0.0
 description: movie
-
 
 filesets:
   # default
