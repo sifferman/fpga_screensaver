@@ -40,9 +40,12 @@ fusesoc.conf:
 clean:
 	rm -rf build fusesoc.conf
 
-${FST} ${IMG}: fusesoc.conf ${SRC} ${TB}
-	pip3 install -r tb/requirements.txt > /dev/null
+${FST}: fusesoc.conf ${SRC} ${TB}
 	fusesoc run --target tb ucsbieee::fpga_movie
+
+${IMG}: fusesoc.conf ${SRC} ${TB} ${FST}
+	@pip3 install -r tb/requirements.txt > /dev/null
+	python3 tb/to_png.py $(IMG:.png=.txt) ${IMG}
 
 ${USAGE_REPORT}: fusesoc.conf ${SRC} ${USAGE}
 	fusesoc run --target usage ucsbieee::fpga_movie

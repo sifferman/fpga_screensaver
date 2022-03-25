@@ -36,4 +36,4 @@ if __name__ == '__main__':
     im = Image.fromarray(np_data, 'RGBA')
     im.save(fileout_name)
 
-    print("Generated image at " + path.abspath(fileout_name) + ".")
+    print("Generated image at " + path.abspath(fileout_name))

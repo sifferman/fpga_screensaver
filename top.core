@@ -53,9 +53,6 @@ targets:
           - -Wall
           - -Wno-timescale
           - -DSIM
-    hooks:
-      post_run:
-        - to_png
 
   lint: # fusesoc run --target lint ucsbieee::fpga_movie
     <<: *default
@@ -99,9 +96,6 @@ targets:
 
 
 scripts:
-  to_png:
-    cmd: [python3, to_png.py, image.txt, image.png]
-    filesets: [tb]
   convert_to_prep:
     cmd: [sed, -i, 's/synth_ice40/prep/g', edalize_yosys_procs.tcl]
   record_usage:
