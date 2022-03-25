@@ -30,11 +30,11 @@ The VGA output is formatted in a png here: `build/ucsbieee__fpga_movie_1.0.0/tb-
 
 ## Requirements
 
-* [FuseSoC](https://fusesoc.readthedocs.io): FPGA design build system, similar in concept to CMake, Bazel, etc. but specific to FPGAs
+* [FuseSoC](https://fusesoc.readthedocs.io): RTL design build system, similar in concept to CMake, Bazel, etc. but specific to HDL code
 * [Icarus Verilog](http://iverilog.icarus.com): Verilog design simulator/compiler
 * [GTKWave](http://gtkwave.sourceforge.net): Timing-diagram-based simulation visualization tool
 * [Verilator](https://www.veripool.org/verilator): (System)Verilog design simulator
-* [Yosys](https://yosyshq.net/yosys): FPGA design synthesis tool, similar in concept to the "compilation" stage during C++ compilation
+* [Yosys](https://yosyshq.net/yosys): RTL design synthesis tool, similar in concept to the "compilation" stage during C++ compilation
 * [`nextpnr-gowin`](https://github.com/YosysHQ/nextpnr#nextpnr-gowin): Gowin-specific FPGA "place-and-route" tool, similar in concept to the "assembly" stage during C++ compilation
 * [Apicula](https://github.com/YosysHQ/apicula): Gowin-specific FPGA design formatter, similar in concept to the "linker" stage during C++ compilation
 * [`openFPGALoader`](https://github.com/trabucayre/openFPGALoader): FPGA programming tool
