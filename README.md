@@ -31,8 +31,8 @@ The VGA output is formatted in a png here: `build/ucsbieee__fpga_movie_1.0.0/tb-
 ## Requirements
 
 * [FuseSoC](https://fusesoc.readthedocs.io): RTL design build system, similar in concept to CMake, Bazel, etc. but specific to HDL code
-* [Icarus Verilog](http://iverilog.icarus.com): Verilog design simulator/compiler
-* [GTKWave](http://gtkwave.sourceforge.net): Timing-diagram-based simulation visualization tool
+* [Icarus Verilog](http://iverilog.icarus.com): Verilog design simulator
+* [GTKWave](http://gtkwave.sourceforge.net): Waveform viewer (view the timing-diagram of the simulation)
 * [Verilator](https://www.veripool.org/verilator): (System)Verilog design simulator
 * [Yosys](https://yosyshq.net/yosys): RTL design synthesis tool, similar in concept to the "compilation" stage during C++ compilation
 * [`nextpnr-gowin`](https://github.com/YosysHQ/nextpnr#nextpnr-gowin): Gowin-specific FPGA "place-and-route" tool, similar in concept to the "assembly" stage during C++ compilation
@@ -43,14 +43,14 @@ The VGA output is formatted in a png here: `build/ucsbieee__fpga_movie_1.0.0/tb-
 
 This project is organized so as to cleanly separate/delineate groups of files responsible for each part of the design:
 
-- `.vscode`: VSCode workspace configuration files
-- `build`: FuseSoC build directory (*doesn't exist until project is built for the first time*)
-- `rtl`: SystemVerilog code to define the VGA display driver
-- `tangnano`: (System)Verilog code to define elements of the project which are uniquely specific to the Sipeed Tang Nano dev board
-- `tb`: SystemVerilog code to define the testbench, used for verifying the design behavior in simulation before programming the physical FPGA
-- `usage`: ***HELP!***
-- `.gitignore`: Git SCM configuration to help keep the repository clean of files built by FuseSoC
-- `fusesoc.conf`: FuseSoC project definition/configuration
-- `lint.vlt`: Verilator configuration specifying how to "lint"/syntax-check the RTL code
-- `Makefile`: GNU Make configuration specifying common project tasks/"targets"
-- `top.core`: FuseSoC "core" configuration specifiing how to build each of the (System)Verilog files in the design
+* `.vscode`: VSCode workspace configuration files
+* `build`: FuseSoC build directory (*doesn't exist until project is built for the first time*)
+* `rtl`: SystemVerilog code to define the VGA display driver
+* `tangnano`: (System)Verilog code to define elements of the project which are uniquely specific to the Sipeed Tang Nano dev board
+* `tb`: SystemVerilog code to define the testbench, used for verifying the design behavior in simulation before programming the physical FPGA
+* `usage`: Files related to generating a cell utilization report in Yosys.
+* `.gitignore`: Git SCM configuration to help keep the repository clean of files built by FuseSoC
+* `fusesoc.conf`: FuseSoC project definition/configuration
+* `lint.vlt`: Verilator configuration specifying rules in verifying the syntax of the RTL code
+* `Makefile`: GNU Make configuration specifying common project tasks/targets
+* `top.core`: FuseSoC "core" configuration specifiing how to build each of the (System)Verilog files in the design
