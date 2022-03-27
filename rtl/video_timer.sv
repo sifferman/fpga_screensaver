@@ -46,7 +46,7 @@ module video_timer #(
         ( y_counter == (V_VISIBLE+V_FRONT+V_SYNC+V_BACK-1) ) ? 0            :
         y_counter + 1;
 
-    logic [31:0] frame_NEXT =
+    wire [31:0] frame_NEXT =
         ( y_counter != 0 && y_counter_NEXT == 0 ) ? frame+1 :
         frame;
 
@@ -54,7 +54,7 @@ module video_timer #(
         if ( rst ) begin
             x_counter <= (H_VISIBLE+H_FRONT+H_SYNC);
             y_counter <= (V_VISIBLE+V_FRONT+V_SYNC);
-            frame <= 0;
+            frame <= ~0;
             position_x <= 0;
             position_y <= 0;
         end else begin

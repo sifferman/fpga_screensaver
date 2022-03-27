@@ -9,7 +9,7 @@ module tangnano #(
 );
 
 
-logic rst = ~An;
+wire rst = ~An;
 logic clk_25_175;
 
 
