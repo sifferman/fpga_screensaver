@@ -18,53 +18,60 @@ module video_timer #(
     output logic                     [31:0] frame
 );
 
+
+    // counter
     localparam WHOLE_LINE   = (H_VISIBLE + H_FRONT + H_SYNC + H_BACK);
     localparam WHOLE_FRAME  = (V_VISIBLE + V_FRONT + V_SYNC + V_BACK);
-
     logic [$clog2(WHOLE_LINE)-1:0] x_counter, x_counter_NEXT;
     logic [$clog2(WHOLE_FRAME)-1:0] y_counter, y_counter_NEXT;
-
-    logic hvisible, vvisible;
-
-    assign visible = hvisible & vvisible;
-
-    assign hvisible = (x_counter < (H_VISIBLE)) && !rst;
-    assign hsync = ~( ((H_VISIBLE+H_FRONT) <= x_counter) && (x_counter < (H_VISIBLE+H_FRONT+H_SYNC)) && !rst );
-
-    assign vvisible = (y_counter < (V_VISIBLE)) && !rst;
-    assign vsync = ~( ((V_VISIBLE+V_FRONT) <= y_counter) && (y_counter < (V_VISIBLE+V_FRONT+V_SYNC)) && !rst );
-
-    assign position_x_NEXT = $clog2(H_VISIBLE)'(x_counter_NEXT);
-    assign position_y_NEXT = $clog2(V_VISIBLE)'(y_counter_NEXT);
-
     assign x_counter_NEXT =
         ( x_counter == (H_VISIBLE+H_FRONT+H_SYNC+H_BACK-1) ) ? 0  :
         x_counter + 1;
-
     assign y_counter_NEXT =
         ( x_counter != (H_VISIBLE+H_FRONT+H_SYNC+H_BACK-1) ) ? y_counter    :
         ( y_counter == (V_VISIBLE+V_FRONT+V_SYNC+V_BACK-1) ) ? 0            :
         y_counter + 1;
 
+    // whether in visible area
+    logic hvisible, vvisible;
+    assign hvisible = (x_counter < (H_VISIBLE)) && !rst;
+    assign vvisible = (y_counter < (V_VISIBLE)) && !rst;
+    assign visible = hvisible & vvisible;
+
+    // horizontal and vertical sync
+    assign hsync = ~( ((H_VISIBLE+H_FRONT) <= x_counter) && (x_counter < (H_VISIBLE+H_FRONT+H_SYNC)) && !rst );
+    assign vsync = ~( ((V_VISIBLE+V_FRONT) <= y_counter) && (y_counter < (V_VISIBLE+V_FRONT+V_SYNC)) && !rst );
+
+    // get current pixel coordinate
+    `ifdef SIM
+    assign position_x_NEXT = visible ? $clog2(H_VISIBLE)'(x_counter_NEXT) : {$clog2(H_VISIBLE){1'bx}};
+    assign position_y_NEXT = visible ? $clog2(V_VISIBLE)'(y_counter_NEXT) : {$clog2(V_VISIBLE){1'bx}};
+    `else
+    assign position_x_NEXT = $clog2(H_VISIBLE)'(x_counter_NEXT);
+    assign position_y_NEXT = $clog2(V_VISIBLE)'(y_counter_NEXT);
+    `endif
+
+    // unsigned integer counts how many frames have passed
     wire [31:0] frame_NEXT =
         ( y_counter != 0 && y_counter_NEXT == 0 ) ? frame+1 :
         frame;
 
+
+    // flip flop
     always_ff @ ( posedge clk ) begin
         if ( rst ) begin
-            x_counter <= (H_VISIBLE+H_FRONT+H_SYNC);
-            y_counter <= (V_VISIBLE+V_FRONT+V_SYNC);
-            frame <= ~0;
-            position_x <= 0;
-            position_y <= 0;
+            x_counter <= (H_VISIBLE+H_FRONT+H_SYNC); // start at back porch
+            y_counter <= (V_VISIBLE+V_FRONT+V_SYNC); // start at back porch
+            frame <= ~0; // start at -1
         end else begin
             x_counter <= x_counter_NEXT;
             y_counter <= y_counter_NEXT;
             frame <= frame_NEXT;
-            position_x <= position_x_NEXT;
-            position_y <= position_y_NEXT;
         end
+        position_x <= position_x_NEXT;
+        position_y <= position_y_NEXT;
 
+        // print frame number at every new frame
         `ifdef SIM
         if (frame != frame_NEXT) begin
             $timeformat( -3, 6, "ms", 0);
@@ -72,5 +79,6 @@ module video_timer #(
         end
         `endif
     end
+
 
 endmodule
