@@ -7,6 +7,18 @@ This project implements the VGA protocol and allows custom images to be displaye
 
 This is a good introductory project to RTL (*[Register-Transfer Level code](https://vhdlwhiz.com/terminology/register-transfer-level)*), analog video interfaces, and fundamental FPGA (*[Field-Programmable Gate Array](https://www.digikey.com/en/blog/fpgas-101-a-beginners-guide)*) concepts in the [Verilog](http://en.wikipedia.org/wiki/Verilog) and [SystemVerilog](http://en.wikipedia.org/wiki/SystemVerilog) HDLs (*[Hardware Description Languages](http://en.wikipedia.org/wiki/Hardware_description_language)*).
 
+## Gallery
+
+These are the images that are supported by this repository:
+
+### Checkerboard
+
+![Checkerboard](gallery/checkerboard.gif)
+
+### Fractal
+
+![Fractal](gallery/fractal.png)
+
 ## Workspace Setup
 
 At the time of writing, some of the required tools must be compiled from source (*e.g. `nextpnr-gowin`, `openFPGALoader`*) and `openFPGALoader` specifically requires a native Linux OS for COM/serial port acesss.
