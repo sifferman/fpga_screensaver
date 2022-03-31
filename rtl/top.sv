@@ -36,7 +36,7 @@ video_timer #(
 );
 
 image #(IMAGE_SELECT) im (
-    clk_25_175,
+    clk_25_175, rst,
     position_x, position_x_NEXT,
     position_y, position_y_NEXT,
     frame,
