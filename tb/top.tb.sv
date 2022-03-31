@@ -1,12 +1,13 @@
 
-`timescale 1s/1ms
+`timescale 1s/1ns
 
 module top_tb #(
-    parameter IMAGE_SELECT = 0
+    parameter IMAGE_SELECT  = 0,
+    parameter FREQ          = 25175000.0
 ) ();
 
 logic clk = 1;
-always #(0.5) clk <= ~clk;
+always #(1.0/FREQ) clk <= ~clk;
 
 logic rst = 0;
 
@@ -24,14 +25,14 @@ top #(IMAGE_SELECT) t (
 );
 
 initial begin : sim
-$timeformat( 0, 0, "", 0);
 $dumpfile( "dump.fst" );
 $dumpvars;
 $display( "Begin simulation.");
 //\\ =========================== \\//
 
 rst = 1;
-#4
+@(posedge clk);
+@(posedge clk);
 rst = 0;
 
 // ==== Checkerboard ====

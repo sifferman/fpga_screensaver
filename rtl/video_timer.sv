@@ -66,8 +66,10 @@ module video_timer #(
         end
 
         `ifdef SIM
-        if (frame != frame_NEXT)
-            $display( "Next frame: [Clk Pulse=%0t]", $realtime );
+        if (frame != frame_NEXT) begin
+            $timeformat( -3, 6, "ms", 0);
+            $display( "Frame %0d begin: [Time=%0t]", frame_NEXT, $realtime );
+        end
         `endif
     end
 
