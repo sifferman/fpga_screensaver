@@ -2,8 +2,8 @@ CAPI=2:
 #
 # Recommended reading about FuseSoC core files: https://fusesoc.readthedocs.io/en/stable/user/build_system/core_files.html
 #
-name: ucsbieee::fpga_movie:1.0.0
-description: movie
+name: ucsbieee::fpga_screensaver:1.0.0
+description: screensaver
 
 # This section describes which functional groups each of the source files belong
 # to and in what language they're written.
@@ -46,7 +46,7 @@ targets:
     parameters:
       - IMAGE_SELECT=1
 
-  tb: # fusesoc run --target tb ucsbieee::fpga_movie
+  tb: # fusesoc run --target tb ucsbieee::fpga_screensaver
     <<: *default
     description: Simulate the design
     filesets_append:
@@ -61,7 +61,7 @@ targets:
           - -Wno-timescale
           - -DSIM
 
-  lint: # fusesoc run --target lint ucsbieee::fpga_movie
+  lint: # fusesoc run --target lint ucsbieee::fpga_screensaver
     <<: *default
     description: Simulate the design
     filesets_append:
@@ -73,7 +73,7 @@ targets:
         mode: lint-only
         verilator_options: ["-Wall"]
 
-  usage: # fusesoc run --target usage ucsbieee::fpga_movie
+  usage: # fusesoc run --target usage ucsbieee::fpga_screensaver
     <<: *default
     description: Synthesize
     filesets_append:
@@ -90,7 +90,7 @@ targets:
       post_build:
         - record_usage
 
-  tangnano: # fusesoc run --target tangnano ucsbieee::fpga_movie
+  tangnano: # fusesoc run --target tangnano ucsbieee::fpga_screensaver
     <<: *default
     description: Synthesize for Tang Nano
     default_tool: apicula

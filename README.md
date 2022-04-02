@@ -1,7 +1,7 @@
 
-# Movie on an FPGA
+# Screensaver on an FPGA
 
-[github.com/E4tHam/fpga_movie](https://github.com/E4tHam/fpga_movie)
+[github.com/E4tHam/fpga_screensaver](https://github.com/E4tHam/fpga_screensaver)
 
 This project implements the VGA protocol and allows custom images to be displayed to the screen using the [Sipeed Tang Nano](https://tangnano.sipeed.com/en) FPGA dev board.
 
@@ -38,7 +38,7 @@ make tangnano       # generate tangnano bitstream
 make load_tangnano  # load bistream to tangnano
 ```
 
-The VGA output is formatted in a png here: `build/ucsbieee__fpga_movie_1.0.0/tb-icarus/image.png`.
+The VGA output is formatted in a png here: `build/ucsbieee__fpga_screensaver_1.0.0/tb-icarus/image.png`.
 
 ## Requirements
 
