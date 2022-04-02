@@ -43,11 +43,15 @@ image #(IMAGE_SELECT) im (
     im_r, im_g, im_b
 );
 
+
+// vga png generation
 `ifdef SIM
 
 integer f;
 initial f = $fopen("image.txt");
+// at every clock pulse, print the color
 always @ (negedge clk_25_175)   $fwrite(f, "%h%h0%h0%h0 ", (visible?8'hff:8'h00), b, g, r);
+// at the end of every hsync, print a line break
 always @ (posedge hsync)        $fwrite(f, "\n");
 
 `endif

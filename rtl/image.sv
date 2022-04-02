@@ -14,7 +14,7 @@ generate
 if (SELECT == 0) begin : checkerboard
 //
 
-wire color_next = position_x_NEXT[2] ^ position_y_NEXT[2];
+wire color_next = position_x_NEXT[6] ^ position_y_NEXT[6];
 
 always_ff @ (posedge clk) begin
     r <= {4{color_next&frame[1]}};

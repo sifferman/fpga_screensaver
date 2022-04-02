@@ -1,8 +1,12 @@
 CAPI=2:
+#
+# Recommended reading about FuseSoC core files: https://fusesoc.readthedocs.io/en/stable/user/build_system/core_files.html
+#
 name: ucsbieee::fpga_movie:1.0.0
 description: movie
 
-
+# This section describes which functional groups each of the source files belong
+# to and in what language they're written.
 filesets:
   # default
   rtl:
@@ -31,7 +35,10 @@ filesets:
       - tangnano/pins.cst:      {file_type: CST}
       # - tangnano/Gowin_rPLL.v:  {file_type: verilogSource}
 
-
+# This section defines the different FuseSoC build targets that can be called
+# to either simulate (in some way) or synthesize the FPGA design. Each build
+# target specifies which files it requires and how to call the tool specific to
+# that process.
 targets:
   default: &default
     filesets:
@@ -94,7 +101,8 @@ targets:
         device: GW1N-LV1QN48C6/I5
     toplevel: tangnano
 
-
+# This section defines non-Verilog scripts (e.g. shell commands or Python scripts)
+# which are used in the above build targets to simulate the PPGA design.
 scripts:
   convert_to_prep:
     cmd: [sed, -i, 's/synth_ice40/prep/g', edalize_yosys_procs.tcl]
@@ -102,7 +110,8 @@ scripts:
     cmd: [yosys, -c, post.tcl]
     filesets: [usage]
 
-
+# This section defines human-readable descriptions of the command-line parameters
+# used in the above guild targets.
 parameters:
   IMAGE_SELECT:
     datatype: int
