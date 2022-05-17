@@ -52,6 +52,15 @@ if (IMAGE_SELECT == 1) begin
 
 //
 end
+// ==== Bouncing Box ====
+if (IMAGE_SELECT == 2) begin
+//
+
+for (integer i = 0; i < 8; i=i+1)
+    @(negedge vsync);
+
+//
+end
 
 //\\ =========================== \\//
 $display( "End simulation.");

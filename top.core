@@ -44,7 +44,7 @@ targets:
     filesets:
       - rtl
     parameters:
-      - IMAGE_SELECT=1
+      - IMAGE_SELECT=2
 
   tb: # fusesoc run --target tb ucsbieee::fpga_screensaver
     <<: *default

@@ -56,6 +56,72 @@ end
 
 //
 end
+// ==== Bouncing Box ====
+if (SELECT == 2) begin : box
+//
+
+`define SIGNED_CLAMP(MIN,T,MAX)     (($signed(MIN) > $signed(T)) ? (MIN) : ($signed(MAX) < $signed(T)) ? (MAX) : (T))
+
+localparam BOX_HEIGHT   = 100;
+localparam BOX_WIDTH    = 100;
+
+logic  [$clog2(SCREEN_WIDTH):0] box_x, box_xv, box_x_next, box_xv_next, box_x_trajectory;
+logic [$clog2(SCREEN_HEIGHT):0] box_y, box_yv, box_y_next, box_yv_next, box_y_trajectory;
+
+/* verilator lint_off WIDTH */
+
+wire hit_v_edge = ($signed(box_x_trajectory) < 0) || ($signed(box_x_trajectory) >= (SCREEN_WIDTH-BOX_WIDTH));
+wire hit_h_edge = ($signed(box_y_trajectory) < 0) || ($signed(box_y_trajectory) >= (SCREEN_HEIGHT-BOX_HEIGHT));
+
+assign box_x_trajectory = box_x + box_xv;
+assign box_y_trajectory = box_y + box_yv;
+assign box_x_next = `SIGNED_CLAMP(0, box_x_trajectory, (SCREEN_WIDTH-BOX_WIDTH));
+assign box_y_next = `SIGNED_CLAMP(0, box_y_trajectory, (SCREEN_HEIGHT-BOX_HEIGHT));
+assign box_xv_next = hit_v_edge ? ((~box_xv)+1) : box_xv;
+assign box_yv_next = hit_h_edge ? ((~box_yv)+1) : box_yv;
+
+wire in_box =
+    ($signed(box_x) <= $unsigned(position_x) && $unsigned(position_x) < ($signed(box_x)+BOX_WIDTH))
+    && ($signed(box_y) <= $unsigned(position_y) && $unsigned(position_y) < ($signed(box_y)+BOX_HEIGHT));
+
+/* verilator lint_on WIDTH */
+
+
+wire [3:0] lightness = {{3{in_box}}, 1'b1};
+logic [2:0] color, color_next;
+assign color_next =
+    !(hit_v_edge||hit_h_edge)   ?   color   :
+    (color==3'b111)             ?   3'b001  :
+    (color + 1);
+
+assign r = lightness & {4{color[0]}};
+assign g = lightness & {4{color[1]}};
+assign b = lightness & {4{color[2]}};
+
+logic [31:0] frame_prev;
+
+always_ff @ (posedge clk) begin
+    if (rst) begin
+        box_x <= 50;
+        box_y <= 50;
+        box_xv <= 2;
+        box_yv <= 1;
+        frame_prev <= 0;
+        color <= 3'b111;
+    end else if (frame_prev != frame) begin
+        box_x <= box_x_next;
+        box_y <= box_y_next;
+        box_xv <= box_xv_next;
+        box_yv <= box_yv_next;
+        frame_prev <= frame;
+        color <= color_next;
+    end
+end
+
+`undef SIGNED_CLAMP
+
+//
+end
 //
 endgenerate
 
