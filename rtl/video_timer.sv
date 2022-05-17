@@ -44,12 +44,14 @@ module video_timer #(
 
     // get current pixel coordinate
     `ifdef SIM
-    assign position_x_NEXT = visible ? $clog2(H_VISIBLE)'(x_counter_NEXT) : {$clog2(H_VISIBLE){1'bx}};
-    assign position_y_NEXT = visible ? $clog2(V_VISIBLE)'(y_counter_NEXT) : {$clog2(V_VISIBLE){1'bx}};
+    assign position_x = visible ? $clog2(H_VISIBLE)'(x_counter) : {$clog2(H_VISIBLE){1'bx}};
+    assign position_y = visible ? $clog2(V_VISIBLE)'(y_counter) : {$clog2(V_VISIBLE){1'bx}};
     `else
+    assign position_x = $clog2(H_VISIBLE)'(x_counter);
+    assign position_y = $clog2(V_VISIBLE)'(y_counter);
+    `endif
     assign position_x_NEXT = $clog2(H_VISIBLE)'(x_counter_NEXT);
     assign position_y_NEXT = $clog2(V_VISIBLE)'(y_counter_NEXT);
-    `endif
 
     // unsigned integer counts how many frames have passed
     wire [31:0] frame_NEXT =
@@ -68,8 +70,6 @@ module video_timer #(
             y_counter <= y_counter_NEXT;
             frame <= frame_NEXT;
         end
-        position_x <= position_x_NEXT;
-        position_y <= position_y_NEXT;
 
         // print frame number at every new frame
         `ifdef SIM
