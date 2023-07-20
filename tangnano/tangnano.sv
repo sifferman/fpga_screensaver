@@ -12,13 +12,8 @@ module tangnano #(
 wire rst = ~An;
 logic clk_25_175;
 
-
-// Waiting for PLLs to be supported by Apicula
-// Gowin_rPLL pll ( .clkoutd(clk_25_175), .clkin(clk_24) );
-assign clk_25_175 = clk_24; // close
-
-
+// PLL to convert 24MHz to 25.175MHz
+Gowin_rPLL pll ( .clkoutd(clk_25_175), .clkin(clk_24) );
 top #(IMAGE_SELECT) t (.*);
-
 
 endmodule

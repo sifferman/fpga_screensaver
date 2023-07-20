@@ -31,9 +31,9 @@ filesets:
 
   tangnano:
     files:
+      - tangnano/Gowin_rPLL.v:  {file_type: verilogSource}
       - tangnano/tangnano.sv:   {file_type: systemVerilogSource}
       - tangnano/pins.cst:      {file_type: CST}
-      # - tangnano/Gowin_rPLL.v:  {file_type: verilogSource}
 
 # This section defines the different FuseSoC build targets that can be called
 # to either simulate (in some way) or synthesize the FPGA design. Each build
