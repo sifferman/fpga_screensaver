@@ -77,8 +77,14 @@ assign box_x_trajectory = box_x + box_xv;
 assign box_y_trajectory = box_y + box_yv;
 assign box_x_next = `SIGNED_CLAMP(0, box_x_trajectory, (SCREEN_WIDTH-BOX_WIDTH));
 assign box_y_next = `SIGNED_CLAMP(0, box_y_trajectory, (SCREEN_HEIGHT-BOX_HEIGHT));
-assign box_xv_next = hit_v_edge ? ((~box_xv)+1) : box_xv;
-assign box_yv_next = hit_h_edge ? ((~box_yv)+1) : box_yv;
+
+// set velocity
+always_comb begin
+    box_xv_next = box_xv;
+    box_yv_next = box_yv;
+    if (hit_v_edge) box_xv_next *= -1;
+    if (hit_h_edge) box_yv_next *= -1;
+end
 
 wire in_box =
     ($signed(box_x) <= $unsigned(position_x) && $unsigned(position_x) < ($signed(box_x)+BOX_WIDTH))
